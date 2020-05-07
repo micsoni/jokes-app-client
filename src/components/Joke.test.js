@@ -9,7 +9,7 @@ describe("Joke Component", () => {
       <Joke setup="setup test" punchline="punchline test" />
     );
     const jokeElement = getByText("setup test");
-    expect(jokeElement).toBeTruthy();
+    expect(jokeElement).toBeInTheDocument();
   });
 
   it("should load punchline after 100 milliseconds", async () => {
@@ -18,7 +18,7 @@ describe("Joke Component", () => {
     );
 
     await waitFor(() => {
-      expect(getByText("punchline test")).toBeTruthy();
+      expect(getByText("punchline test")).toBeInTheDocument();
     });
   });
 });
