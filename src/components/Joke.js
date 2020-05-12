@@ -9,12 +9,12 @@ function Joke({ setup, punchline, delay }) {
     setTimeout(() => {
       setJokeDelay(true);
     }, timeout);
-  }, []);
+  }, [timeout]);
 
   return (
-    <div data-testid="joke-container">
+    <div>
       <p>{setup}</p>
-      {jokeDelay && <p data-testid="joke-punch-line">{punchline}</p>}
+      {jokeDelay && <p>{punchline}</p>}
     </div>
   );
 }
