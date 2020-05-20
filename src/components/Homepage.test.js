@@ -1,5 +1,9 @@
 import React from "react";
-import { render, act, waitForElementToBeRemoved } from "@testing-library/react";
+import {
+  render,
+  waitForElementToBeRemoved,
+  waitFor,
+} from "@testing-library/react";
 import axios from "axios";
 import Homepage from "./Homepage";
 
@@ -19,5 +23,14 @@ describe("Homepage", () => {
     await waitForElementToBeRemoved(loading);
 
     expect(getByText(fakeJoke.setup)).toBeInTheDocument();
+  });
+  it("should render error message when fetch fails", async () => {
+    const error = { response: { status: 404 } };
+    axios.get.mockImplementationOnce(() => Promise.reject(error));
+
+    const { getByText } = render(<Homepage />);
+    await waitFor(() => {
+      expect(getByText("Ops! Something went wrong")).toBeInTheDocument();
+    });
   });
 });
