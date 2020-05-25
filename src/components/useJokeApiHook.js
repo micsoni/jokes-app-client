@@ -3,9 +3,7 @@ import axios from "axios";
 
 const useJokeApiHook = () => {
   const [joke, setJoke] = useState({ setup: "", punchline: "" });
-  const [url, setUrl] = useState(
-    `https://official-joke-api.appspot.com/jokes/programming/random`
-  );
+
   const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState({
     status: false,
@@ -17,7 +15,9 @@ const useJokeApiHook = () => {
     const fetchJoke = async () => {
       setIsError({ status: false, message: null });
       try {
-        const jokeInfo = await axios.get(url);
+        const jokeInfo = await axios.get(
+          `https://official-joke-api.appspot.com/jokes/programming/random`
+        );
         setJoke({
           setup: jokeInfo.data[0].setup,
           punchline: jokeInfo.data[0].punchline,
@@ -33,9 +33,9 @@ const useJokeApiHook = () => {
       setIsLoading(false);
     };
     fetchJoke();
-  }, [url]);
+  }, []);
 
-  return [{ joke, isLoading, isError }, setUrl];
+  return [{ joke, isLoading, isError }];
 };
 
 export default useJokeApiHook;
