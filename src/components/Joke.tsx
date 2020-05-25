@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
 
-function Joke({ setup, punchline, delay }) {
-  const [jokeDelay, setJokeDelay] = useState(false);
+type CompleteJoke = { setup: string; punchline: string; delay?: number };
 
-  const timeout = delay || 3000;
+function Joke({ setup, punchline, delay }: CompleteJoke): JSX.Element {
+  const [jokeDelay, setJokeDelay] = useState<boolean>(false);
+
+  const timeout:number = delay || 3000
 
   useEffect(() => {
     setTimeout(() => {

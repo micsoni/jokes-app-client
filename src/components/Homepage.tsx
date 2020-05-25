@@ -3,7 +3,7 @@ import React from "react";
 import Joke from "./Joke";
 import useJokeApiHook from "./useJokeApiHook";
 
-function Homepage() {
+function Homepage(): JSX.Element {
   const [{ joke, isLoading, isError }] = useJokeApiHook();
 
   if (isError.status)
@@ -17,7 +17,7 @@ function Homepage() {
   if (isLoading) 
   return <p>loading</p>;
   
-  return <Joke setup={joke.setup} punchline={joke.punchline} />;
+  return <Joke setup={joke.setup} punchline={joke.punchline}/>;
 }
 
 export default Homepage;
