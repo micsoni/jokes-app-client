@@ -1,31 +1,22 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
+import React from "react";
+
 import Joke from "./Joke";
+import useJokeApiHook from "./useJokeApiHook";
 
 function Homepage() {
-  const [loading, setLoading] = useState(true);
-  const [joke, setJoke] = useState({ setup: "", punchline: "" });
+  const [{ joke, isLoading, isError }] = useJokeApiHook();
 
-  useEffect(() => {
-    async function fetchJoke() {
-      try {
-        const jokeInfo = await axios.get(
-          `https://official-joke-api.appspot.com/jokes/programming/random`
-        );
-        setJoke({
-          setup: jokeInfo.data[0].setup,
-          punchline: jokeInfo.data[0].punchline,
-        });
-        setLoading(false);
-      } catch (error) {
-        //future error handling
-        console.log("ERROR FETCHING JOKE", error);
-      }
-    }
-    fetchJoke();
-  }, []);
+  if (isError.status)
+    return (
+      <div>
+        <p>Error {isError.type}</p>
+        {isError.message}
+      </div>
+    );
 
-  if (loading) return <p>loading</p>;
+  if (isLoading) 
+  return <p>loading</p>;
+  
   return <Joke setup={joke.setup} punchline={joke.punchline} />;
 }
 
