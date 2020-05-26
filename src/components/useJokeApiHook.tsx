@@ -1,11 +1,14 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 
-const useJokeApiHook = () => {
-  const [joke, setJoke] = useState({ setup: "", punchline: "" });
+type Error = { status: boolean; type: number | null; message: string | null };
 
-  const [isLoading, setIsLoading] = useState(true);
-  const [isError, setIsError] = useState({
+type Joke = { setup: string; punchline: string };
+
+function useJokeApiHook() {
+  const [joke, setJoke] = useState<Joke>({ setup: "", punchline: "" });
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [isError, setIsError] = useState<Error>({
     status: false,
     type: null,
     message: null,
@@ -13,7 +16,7 @@ const useJokeApiHook = () => {
 
   useEffect(() => {
     const fetchJoke = async () => {
-      setIsError({ status: false, message: null });
+      setIsError({ status: false, message: null, type: null });
       try {
         const jokeInfo = await axios.get(
           `https://official-joke-api.appspot.com/jokes/programming/random`
@@ -23,7 +26,6 @@ const useJokeApiHook = () => {
           punchline: jokeInfo.data[0].punchline,
         });
       } catch (error) {
-        console.log(error.response);
         setIsError({
           status: true,
           type: error.response.status,
@@ -36,6 +38,6 @@ const useJokeApiHook = () => {
   }, []);
 
   return [{ joke, isLoading, isError }];
-};
+}
 
 export default useJokeApiHook;
