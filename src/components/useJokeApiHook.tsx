@@ -5,7 +5,7 @@ type Error = { status: boolean; type: number | null; message: string | null };
 
 type Joke = { setup: string; punchline: string };
 
-const useJokeApiHook = () => {
+function useJokeApiHook() {
   const [joke, setJoke] = useState<Joke>({ setup: "", punchline: "" });
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [isError, setIsError] = useState<Error>({
@@ -26,7 +26,6 @@ const useJokeApiHook = () => {
           punchline: jokeInfo.data[0].punchline,
         });
       } catch (error) {
-        console.log(error.response);
         setIsError({
           status: true,
           type: error.response.status,
@@ -39,6 +38,6 @@ const useJokeApiHook = () => {
   }, []);
 
   return [{ joke, isLoading, isError }];
-};
+}
 
 export default useJokeApiHook;

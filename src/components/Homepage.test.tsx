@@ -9,12 +9,14 @@ import Homepage from "./Homepage";
 
 jest.mock("axios");
 
+const mockedAxios = axios as jest.Mocked<typeof axios>
+
 describe("Homepage", () => {
   it("should render loading before joke is fetched & rendered", async () => {
     const fakeJoke = { setup: "setup test", punchline: "punchline test" };
     const response = { data: [fakeJoke] };
 
-    axios.get.mockImplementationOnce(() => Promise.resolve(response));
+    mockedAxios.get.mockImplementationOnce(() => Promise.resolve(response));
 
     const { getByText } = render(<Homepage />);
     const loading = getByText("loading");
@@ -26,7 +28,7 @@ describe("Homepage", () => {
   });
   it("should render error message when fetch fails", async () => {
     const error = { response: { status: 404 } };
-    axios.get.mockImplementationOnce(() => Promise.reject(error));
+    mockedAxios.get.mockImplementationOnce(() => Promise.reject(error))
 
     const { getByText } = render(<Homepage />);
     await waitFor(() => {
