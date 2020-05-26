@@ -1,6 +1,17 @@
 ## Jokes app - Practice project
 
-This app is beeing developed with the goal to practice jest unit tests and error handling.
+This app is beeing developed with the goal to practice jest unit tests, error handling and typescript.
+
+### Setup
+
+To initialize React app
+
+- npm i
+- npm run start
+
+To run the tests
+
+- npm test
 
 ### Requirements
 
